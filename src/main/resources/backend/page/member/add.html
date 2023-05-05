@@ -21,59 +21,59 @@
         label-width="180px"
         class="demo-ruleForm"
       >
-        <el-form-item label="账号:" prop="username">
-          <el-input v-model="ruleForm.username" placeholder="请输入账号" maxlength="20"/>
+        <el-form-item label="User Name" prop="username"><!-- 账号 -->
+          <el-input v-model="ruleForm.username" placeholder="Enter User Name" maxlength="20"/><!-- 请输入账号 -->
         </el-form-item>
         <el-form-item
-          label="员工姓名:"
+          label="Name"
           prop="name"
         >
           <el-input
             v-model="ruleForm.name"
-            placeholder="请输入员工姓名"
+            placeholder="Enter Name"
             maxlength="20"
           />
-        </el-form-item>
+        </el-form-item><!-- 员工姓名: -->
 
         <el-form-item
-          label="手机号:"
+          label="Phone Number"
           prop="phone"
         >
           <el-input
             v-model="ruleForm.phone"
-            placeholder="请输入手机号"
+            placeholder="Enter Phone Number"
             maxlength="20"
           />
-        </el-form-item>
+        </el-form-item><!-- 手机号: --><!-- 请输入手机号 -->
         <el-form-item
-          label="性别:"
+          label="Sex"
           prop="sex"
         >
           <el-radio-group v-model="ruleForm.sex">
-            <el-radio label="男"></el-radio>
-            <el-radio label="女"></el-radio>
+            <el-radio label="Male"></el-radio>
+            <el-radio label="Female"></el-radio><!--性别 男、女 -->
           </el-radio-group>
         </el-form-item>
         <el-form-item
-          label="身份证号:"
+          label="ID Number"
           prop="idNumber"
-        >
+        ><!-- 身份证号: -->
           <el-input
             v-model="ruleForm.idNumber"
-            placeholder="请输入身份证号"
+            placeholder="Enter ID Number"
             maxlength="20"
-          />
+          /><!-- 请输入身份证号: -->
         </el-form-item>
         <div class="subBox address">
-          <el-form-item>
+          <el-form-item><!-- 取消、保存 -->
             <el-button  @click="goBack()">
-              取消
+              CANCEL
             </el-button>
             <el-button
               type="primary"
               @click="submitForm('ruleForm', false)"
             >
-              保存
+              SAVE
             </el-button>
             <el-button
               v-if="actionType == 'add'"
@@ -81,8 +81,8 @@
               class="continue"
               @click="submitForm('ruleForm', true)"
             >
-              保存并继续添加
-            </el-button>
+              Save and Continue Adding
+            </el-button><!-- 保存并继续添加 -->
           </el-form-item>
         </div>
       </el-form>
@@ -108,7 +108,7 @@
             ruleForm : {
                 'name': '',
                 'phone': '',
-                'sex': '男',
+                'sex': 'Male',//男
                 'idNumber': '',
                 username: ''
             }
@@ -146,10 +146,10 @@
               if (String(res.code) === '1') {
                 console.log(res.data)
                 this.ruleForm = res.data
-                this.ruleForm.sex = res.data.sex === '0' ? '女' : '男'
+                this.ruleForm.sex = res.data.sex === '0' ? 'Female' : 'Male'//男、女
                 // this.ruleForm.password = ''
               } else {
-                this.$message.error(res.msg || '操作失败')
+                this.$message.error(res.msg || 'Operation failed')//操作失败
               }
             })
           },
@@ -159,11 +159,11 @@
                 if (this.actionType === 'add') {
                   const params = {
                     ...this.ruleForm,
-                    sex: this.ruleForm.sex === '女' ? '0' : '1'
+                    sex: this.ruleForm.sex === 'Female' ? '0' : '1'//男、女
                   }
                   addEmployee(params).then(res => {
                     if (res.code === 1) {
-                      this.$message.success('员工添加成功！')
+                      this.$message.success('Employee added successfully!')//员工添加成功
                       if (!st) {
                         this.goBack()
                       } else {
@@ -173,30 +173,30 @@
                           'phone': '',
                           // 'password': '',
                           // 'rePassword': '',/
-                          'sex': '男',
+                          'sex': 'Male',//男、女
                           'idNumber': ''
                         }
                       }
                     } else {
-                      this.$message.error(res.msg || '操作失败')
+                      this.$message.error(res.msg || 'Operation failed')//操作失败
                     }
                   }).catch(err => {
-                    this.$message.error('请求出错了：' + err)
+                    this.$message.error('Request error:' + err)//请求出错了
                   })
                 } else {
                   const params = {
                     ...this.ruleForm,
-                    sex: this.ruleForm.sex === '女' ? '0' : '1'
+                    sex: this.ruleForm.sex === 'Female' ? '0' : '1'//男、女
                   }
                   editEmployee(params).then(res => {
                     if (res.code === 1) {
-                      this.$message.success('员工信息修改成功！')
+                      this.$message.success('Employee information modified successfully!')//员工信息修改成功！
                       this.goBack()
                     } else {
-                      this.$message.error(res.msg || '操作失败')
+                      this.$message.error(res.msg || 'Operation failed')//操作失败
                     }
                   }).catch(err => {
-                    this.$message.error('请求出错了：' + err)
+                    this.$message.error('Request error:' + err)//请求出错了：
                   })
                 }
               } else {
@@ -209,7 +209,7 @@
             window.parent.menuHandle({
               id: '2',
               url: '/backend/page/member/list.html',
-              name: '员工管理'
+              name: 'Employee Management'//员工管理
             },false)
           }
         }
