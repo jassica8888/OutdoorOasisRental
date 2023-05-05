@@ -112,4 +112,19 @@ public class EmployeeController {
         return R.success(pageInfo);
     }
 
+    /**
+     * 根据id修改员工信息
+     * @param employee
+     * @return
+     */
+    @PutMapping
+    public R<String> update(HttpServletRequest request,@RequestBody Employee employee){
+        log.info(employee.toString());
+        Long empID = (long)request.getSession().getAttribute("employee");
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(empID);
+        employeeService.updateById(employee);
+        return R.success("Employee information updated successfully");
+    }
+
 }
