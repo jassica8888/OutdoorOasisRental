@@ -22,13 +22,13 @@
           class="continue"
           @click="addClass('class')"
         >
-          + 新增菜品分类
+         + Add Equipment Category<!-- + 新增菜品分类  按钮 -->
         </el-button>
         <el-button
           type="primary"
           @click="addClass('meal')"
         >
-          + 新增套餐分类
+          + Add Equipment Package Category<!-- + 新增套餐分类 按钮-->
         </el-button>
       </div>
       <el-table
@@ -38,33 +38,33 @@
       >
         <el-table-column
           prop="name"
-          label="分类名称"
-        /></el-table-column>
+          label="Category Name"
+        /></el-table-column><!-- 显示内容的表格 点击新增菜品或新增套餐后弹出框，分类名称 -->
         <el-table-column
           prop="type"
-          label="分类类型"
-        >
+          label="Category Type"
+        ><!-- 分类类型 -->
           <template slot-scope="scope">
-            <span>{{ scope.row.type == '1' ? '菜品分类': '套餐分类' }}</span>
+            <span>{{ scope.row.type == '1' ? 'Equipment Category': 'Package Category' }}</span><!-- 显示分类，'菜品分类': '套餐分类' -->
           </template>
         </el-table-column>
         <el-table-column
           prop="updateTime"
-          label="操作时间"
-        >
+          label="Update Time"
+        ><!-- 操作时间 -->
         <template slot-scope="scope">
          {{scope.row.updateTime}}
         </template>
         </el-table-column>
         <el-table-column
           prop="sort"
-          label="排序"
-        /></el-table-column>
+          label="Sort"
+        /></el-table-column><!-- 排序 -->
         <el-table-column
-          label="操作"
+          label="Operation"
           width="160"
           align="center"
-        >
+        ><!-- 操作 以及修改删除按钮-->
           <template slot-scope="scope">
             <el-button
               type="text"
@@ -72,7 +72,7 @@
               class="blueBug"
               @click="editHandle(scope.row)"
             >
-              修改
+              Edit<!-- 修改-->
             </el-button>
             <el-button
               type="text"
@@ -80,11 +80,12 @@
               class="delBut non"
               @click="deleteHandle(scope.row.id)"
             >
-              删除
+              Delete<!-- 删除-->
             </el-button>
           </template>
         </el-table-column>
       </el-table>
+      <!-- 分页-->
       <el-pagination
         class="pageList"
         :page-sizes="[10, 20, 30, 40]"
@@ -95,6 +96,7 @@
         @current-change="handleCurrentChange"
       ></el-pagination>
     </div>
+    <!--对话框-->
     <el-dialog
       :title="classData.title"
       :visible.sync="classData.dialogVisible"
@@ -105,16 +107,16 @@
         class="demo-form-inline"
         label-width="100px"
       >
-        <el-form-item label="分类名称：">
+        <el-form-item label="Category Name"><!-- 这才是点增加菜品弹出的小窗口，分类名称-->
           <el-input
             v-model="classData.name"
-            placeholder="请输入分类名称"
+            placeholder="Enter Category Name"
             maxlength="14"
-          />
+          /><!--占位符，请输入分类名称-->
         </el-form-item>
-        <el-form-item label="排序：">
-          <el-input v-model="classData.sort"  type="number" placeholder="请输入排序" />
-        </el-form-item>
+        <el-form-item label="Sort">
+          <el-input v-model="classData.sort"  type="number" placeholder="Enter Sort" />
+        </el-form-item><!--占位符，请输入排序-->
       </el-form>
       <span
         slot="footer"
@@ -123,19 +125,19 @@
         <el-button
           size="medium"
           @click="classData.dialogVisible = false"
-        >取 消</el-button>
+        >Cancel</el-button><!--取消-->
         <el-button
           type="primary"
           size="medium"
           @click="submitForm()"
-        >确 定</el-button>
+        >Save</el-button><!--确 定-->
         <el-button
           v-if="action != 'edit'"
           type="primary"
           size="medium"
           class="continue"
           @click="submitForm('go')"
-        > 保存并继续添加 </el-button>
+        > Save and Continue Adding </el-button><!--保存并继续添加-->
       </span>
     </el-dialog>
   </div>
@@ -159,7 +161,7 @@
             tableData: [],
             type :'',
             classData: {
-              'title': '添加菜品分类',
+              'title': 'ADD EQUIPMENT CATEGORY',<!--添加菜品分类-->
               'dialogVisible': false,
               'categoryId': '',
               'name': '',
@@ -180,10 +182,10 @@
                 this.tableData = res.data.records
                 this.counts = Number(res.data.total)
               } else {
-                this.$message.error(res.msg || '操作失败')
+                this.$message.error(res.msg || 'Operation Failed')//'操作失败'
               }
             }).catch(err => {
-              this.$message.error('请求出错了：' + err)
+              this.$message.error('Request error:' + err)//请求出错了：
             })
           },
           handleQuery() {
@@ -193,10 +195,10 @@
            // 添加
           addClass(st) {
             if (st == 'class') {
-              this.classData.title = '新增菜品分类'
+              this.classData.title = 'Add Equipment Category'//新增菜品分类
               this.type = '1'
             } else {
-              this.classData.title = '新增套餐分类'
+              this.classData.title = 'Add Equipment Package Category'//新增套餐分类
               this.type = '2'
             }
             this.action = 'add'
@@ -205,7 +207,7 @@
             this.classData.dialogVisible = true
           },
           editHandle(dat) {
-            this.classData.title = '修改分类'
+            this.classData.title = 'EDIT CATEGORY'//修改分类
             this.action = 'edit'
             this.classData.name = dat.name
             this.classData.sort = dat.sort
@@ -217,21 +219,22 @@
             this.classData.dialogVisible = false
           },
           //删除
+          //此操作将永久删除该文件, 是否继续?提示确定确定
           deleteHandle(id) {
-            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-              'confirmButtonText': '确定',
-              'cancelButtonText': '取消',
+            this.$confirm('This operation will permanently delete the file. Continue?', 'Prompt', {
+              'confirmButtonText': 'Delete',
+              'cancelButtonText': 'Cancel',
               'type': 'warning'
             }).then(() => {
               deleCategory(id).then(res => {
                 if (res.code === 1) {
-                  this.$message.success('删除成功！')
+                  this.$message.success('Deletion successful')//'删除成功！'
                   this.handleQuery()
                 } else {
-                  this.$message.error(res.msg || '操作失败')
+                  this.$message.error(res.msg || 'Operation Failed')//'操作失败'
                 }
               }).catch(err => {
-                this.$message.error('请求出错了：' + err)
+                this.$message.error('Request error:' + err)//请求出错了：
               })
             })
           },
@@ -246,7 +249,7 @@
                     addCategory({'name': classData.name,'type':this.type, sort: classData.sort}).then(res => {
                       console.log(res)
                       if (res.code === 1) {
-                        this.$message.success('分类添加成功！')
+                        this.$message.success('Category added successfully！')//分类添加成功
                         if (!st) {
                           this.classData.dialogVisible = false
                         } else {
@@ -255,37 +258,37 @@
                         }
                         this.handleQuery()
                       } else {
-                        this.$message.error(res.msg || '操作失败')
+                        this.$message.error(res.msg || 'Operation Failed')//'操作失败'
                       }
                     }).catch(err => {
-                      this.$message.error('请求出错了：' + err)
+                      this.$message.error('Request error:' + err)//请求出错了：
                     })
                   } else {
-                    this.$message.error('排序只能输入数字类型')
+                    this.$message.error('Only numeric values are allowed for sorting')//"排序只能输入数字类型"
                   }
                   
               } else {
-                  this.$message.error('请输入分类名称或排序')
+                  this.$message.error('Please enter a category name or sorting value')//请输入分类名称或排序
               }
             } else if (valid) {
               const reg = /^\d+$/
               if (reg.test(this.classData.sort)) {
                 editCategory({'id':this.classData.id,'name': this.classData.name, sort: this.classData.sort}).then(res => {
                   if (res.code === 1) {
-                    this.$message.success('分类修改成功！')
+                    this.$message.success('Category modified successfully！')//分类修改成功
                     this.classData.dialogVisible = false
                     this.handleQuery()
                   } else {
-                    this.$message.error(res.msg || '操作失败')
+                    this.$message.error(res.msg || 'Operation Failed')//'操作失败'
                   }
                 }).catch(err => {
-                  this.$message.error('请求出错了：' + err)
+                  this.$message.error('Request error:' + err)//请求出错了：
                 })
               } else {
-                this.$message.error('排序只能输入数字类型')
+                this.$message.error('Only numeric values are allowed for sorting')//排序只能输入数字类型
               }
             } else {
-              this.$message.error('请输入分类名称或排序')
+              this.$message.error('Please enter a category name or sorting value')//请输入分类名称或排序
             }
           },
           handleSizeChange (val) {
