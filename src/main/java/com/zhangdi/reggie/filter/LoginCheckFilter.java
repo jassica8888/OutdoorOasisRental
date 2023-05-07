@@ -1,6 +1,7 @@
 package com.zhangdi.reggie.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.zhangdi.reggie.common.BaseContext;
 import com.zhangdi.reggie.common.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,7 @@ public class LoginCheckFilter implements Filter{
         };
         //2.判断本次请求是否需要过滤（某些请求及路径可以直接放行）
         boolean check = check(urls,requestURI);
+
         //3.不需要处理，直接放行
         if(check){
             log.info("This Request doesn't need to filter:{}",requestURI);
@@ -48,6 +50,13 @@ public class LoginCheckFilter implements Filter{
         //4.判断登录状态，如果已经登录，直接放行（不能直接放行的请求，检查是否已登录）
         if(request.getSession().getAttribute("employee")!=null){
             log.info("User logged in, user ID is:{}",request.getSession().getAttribute("employee"));
+
+            Long empId = (long)request.getSession().getAttribute("employee");
+            BaseContext.setCurrentId(empId);
+
+            //long id = Thread.currentThread().getId();
+            //log.info("Thread Id is:{}",id);
+
             filterChain.doFilter(request,response);//直接放行
             return;
         }
