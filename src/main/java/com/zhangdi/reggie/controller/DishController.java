@@ -2,7 +2,9 @@ package com.zhangdi.reggie.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhangdi.reggie.common.CustomException;
 import com.zhangdi.reggie.common.R;
 import com.zhangdi.reggie.dto.DishDto;
 import com.zhangdi.reggie.entity.Category;
@@ -124,4 +126,42 @@ public class DishController {
         List<Dish> list = dishService.list(queryWrapper);
         return R.success(list);
     }
+
+
+
+    /**
+     * 批量修改菜品状态
+     * @param status
+     * @param ids
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    public R<String> status(@PathVariable Integer status, @RequestParam List<Long> ids) {
+        log.info("status:{},ids:{}", status, ids);
+        LambdaUpdateWrapper<Dish> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.in(ids != null, Dish::getId, ids);
+        updateWrapper.set(Dish::getStatus, status);
+        dishService.update(updateWrapper);
+        return R.success("Batch operation successful");
+    }
+
+    /**
+     * 删除及批量删除
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    public R<String> delete(@RequestParam List<Long> ids) {
+        log.info("删除的ids：{}", ids);
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Dish::getId, ids);
+        queryWrapper.eq(Dish::getStatus, 1);
+        int count = dishService.count(queryWrapper);
+        if (count > 0) {
+            throw new CustomException("Unable to delete，products on sale");//删除列表中存在启售状态商品，无法删除
+        }
+        dishService.removeByIds(ids);
+        return R.success("Deletion successful");
+    }
+
 }
