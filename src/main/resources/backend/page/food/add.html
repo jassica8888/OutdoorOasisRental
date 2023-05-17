@@ -60,52 +60,52 @@
       >
         <div>
           <el-form-item
-            label="菜品名称:"
+            label="Equipment Name"
             prop="name"
-          >
+          ><!-- 菜品名称 -->
             <el-input
               v-model="ruleForm.name"
-              placeholder="请填写菜品名称"
+              placeholder="Please enter equipment name"
               maxlength="20"
-            />
+            /><!-- 请填写菜品名称 -->
           </el-form-item>
           <el-form-item
-            label="菜品分类:"
+            label="Equipment Category"
             prop="categoryId"
-          >
+          ><!-- 菜品分类: -->
             <el-select
               v-model="ruleForm.categoryId"
-              placeholder="请选择菜品分类"
-            >
+              placeholder="Please select equipment category"
+            ><!-- 请选择菜品分类 -->
               <el-option v-for="(item,index) in dishList" :key="index" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
         </div>
         <div>
           <el-form-item
-            label="菜品价格:"
+            label="Equipment Price"
             prop="price"
-          >
+          ><!-- 菜品价格 -->
             <el-input
               v-model="ruleForm.price"
-              placeholder="请设置菜品价格"
-            />
+              placeholder="Please set equipment price"
+            /><!-- 请设置菜品价格 -->
           </el-form-item>
         </div>
-        <el-form-item label="口味做法配置:">
+        <el-form-item label="Specification Configuration"><!--  口味做法配置 -->
           <el-form-item>
             <div class="flavorBox">
               <span
                 v-if="dishFlavors.length == 0"
                 class="addBut"
                 @click="addFlavore"
-              > + 添加口味</span>
+              > + Add Specification</span><!--  添加口味 -->
               <div
                 v-if="dishFlavors.length != 0"
                 class="flavor"
               >
                 <div class="title">
-                  <span>口味名（3个字内）</span><span>口味标签（输入标签回车添加）</span>
+                  <span>Specification Name</span><span>Flavor tags (enter tags and press Enter to add)</span><!-- 口味名（3个字内）口味标签（输入标签回车添加） -->
                 </div>
                 <div class="cont">
                   <div
@@ -126,11 +126,11 @@
                               v-model="item.name"
                               type="text"
                               style="width: 100%"
-                              placeholder="请输入口味"
+                              placeholder="Please Enter Specification"
                               @focus="selectFlavor(true,index)"
                               @blur="outSelect(false,index)"
                               @input="inputHandle(index)"
-                            />
+                            /><!-- 请输入口味 -->
                         </div>
                         <div v-show="item.showOption" class="flavorSelect">
                           <span
@@ -142,7 +142,7 @@
                           <span
                             v-if="dishFlavorsData == []"
                             class="none"
-                          >无数据</span>
+                          >No Data</span><!-- 无数据 -->
                         </div>
                       </div>
                     </div>
@@ -165,15 +165,15 @@
                     <span
                       class="delFlavor delBut non"
                       @click="delFlavor(index)"
-                    >删除</span>
+                    >Delete</span><!-- 删除 -->
                   </div>
                 </div>
                 <div
                   class="addBut"
                   @click="addFlavore"
                 >
-                  添加口味
-                </div>
+                  Add Specification
+                </div><!-- 添加口味 -->
               </div>
             </div>
           </el-form-item>
@@ -182,10 +182,10 @@
         </div>
         <div>
           <el-form-item
-            label="菜品图片:"
+            label="Equipment Image"
             prop="region"
             class="uploadImg"
-          >
+          ><!-- 菜品图片: -->
             <el-upload
               class="avatar-uploader"
               action="/common/upload"
@@ -208,37 +208,37 @@
         </div>
         <div class="address">
           <el-form-item
-            label="菜品描述:"
+            label="Package Description"
             prop="region"
-          >
+          ><!-- 菜品描述: -->
             <el-input
               v-model="ruleForm.description"
               type="textarea"
               :rows="3"
-              placeholder="菜品描述，最长200字"
+              placeholder="Equipment description, maximum 200 words"
               maxlength="200"
-            />
+            /><!-- 菜品描述，最长200字 -->
           </el-form-item>
         </div>
         <div class="subBox address">
           <el-form-item>
             <el-button @click="goBack()">
-              取消
-            </el-button>
+              Cancel
+            </el-button><!-- 取消 -->
             <el-button
               type="primary"
               @click="submitForm('ruleForm')"
             >
-              保存
-            </el-button>
+              Save
+            </el-button><!-- 保存 -->
             <el-button
               v-if="actionType == 'add'"
               type="primary"
               class="continue"
               @click="submitForm('ruleForm','goAnd')"
             >
-              保存并继续添加菜品
-            </el-button>
+              Save and Continue Adding
+            </el-button><!-- 保存并继续添加菜品 -->
           </el-form-item>
         </div>
       </el-form>
@@ -289,10 +289,10 @@
           rules () {
             return {
               'name': [
-                {'required': true, 'message': '请填写菜品名称', 'trigger': 'blur'}
+                {'required': true, 'message': 'Please Enter Equipment Name', 'trigger': 'blur'}
               ],
               'categoryId': [
-                {'required': true, 'message': '请选择菜品分类', 'trigger': 'change'}
+                {'required': true, 'message': 'Please Select Equipment Category', 'trigger': 'change'}
               ],
               'price': [
                 {
@@ -300,18 +300,18 @@
                   // 'message': '请填写菜品价格',
                   validator: (rules, value, callback) => {
                     if (!value) {
-                      callback(new Error('请填写菜品价格'))
+                      callback(new Error('Please Enter Equipment Price'))
                     } else {
                       const reg = /^\d+(\.\d{0,2})?$/
                       if (reg.test(value)) {
                         if(value < 10000){
                           callback()
                         }else{
-                          callback(new Error('菜品价格小于10000'))
+                          callback(new Error('Equipment price should be less than 10000'))//菜品价格小于10000
                         }
                       } else {
-                        callback(new Error('菜品价格格式只能为数字,且最多保留两位小数'))
-                      }
+                        callback(new Error('Equipment price in numeric format with a maximum of two decimal places.'))//菜品价格格式只能为数字,且最多保留两位小数
+                      }<!-- 菜品名称 -->
                     }
                   },
                   'trigger': 'blur'
@@ -346,8 +346,8 @@
                 // this.imageUrl = res.data.data.image
                 this.imageUrl = `/common/download?name=${res.data.image}`
               } else {
-                this.$message.error(res.msg || '操作失败')
-              }
+                this.$message.error(res.msg || 'Operation Failed')
+              }<!-- 菜品名称 -->
             })
           },
           // 按钮 - 添加口味
@@ -393,8 +393,8 @@
               if (res.code === 1) {
                 this.dishList = res.data
               } else {
-                this.$message.error(res.msg || '操作失败')
-              }
+                this.$message.error(res.msg || 'Operation Failed')
+              }<!-- 菜品名称 -->
             })
           },
 
@@ -454,14 +454,14 @@
                 params.flavors = this.dishFlavors.map(obj => ({ ...obj, value: JSON.stringify(obj.value) }))
                 delete params.dishFlavors
                 if(!this.imageUrl){
-                  this.$message.error('请上传菜品图片')
+                  this.$message.error('Please Upload Equipment Image')
                   return 
-                }
+                }<!-- 菜品名称 --><!-- 菜品名称 -->
                 if (this.actionType == 'add') {
                   delete params.id
                   addDish(params).then(res => {
                     if (res.code === 1) {
-                      this.$message.success('菜品添加成功！')
+                      this.$message.success('Equipment Added Successfully!')
                       if (!st) {
                         this.goBack()
                       } else {
@@ -481,22 +481,22 @@
                         }
                       }
                     } else {
-                      this.$message.error(res.msg || '操作失败')
+                      this.$message.error(res.msg || 'Operation Failed')
                     }
                   }).catch(err => {
-                    this.$message.error('请求出错了：' + err)
+                    this.$message.error('Package Edited Successfully！：' + err)
                   })
                 } else {
                   delete params.updateTime
                   editDish(params).then(res => {
                     if (res.code === 1) {
-                      this.$message.success('菜品修改成功！')
+                      this.$message.success('Equipment Edited Successfully！')
                       this.goBack()
                     } else {
-                      this.$message.error(res.msg || '操作失败')
+                      this.$message.error(res.msg || 'Operation Failed')
                     }
                   }).catch(err => {
-                    this.$message.error('请求出错了：' + err)
+                    this.$message.error('Request Error：' + err)
                   })
                 }
               } else {
@@ -507,12 +507,12 @@
 
           handleAvatarSuccess (response, file, fileList) {
             // 拼接down接口预览
-            if(response.code === 0 && response.msg === '未登录'){
+            if(response.code === 0 && response.msg === 'Not logged in'){
               window.top.location.href = '/backend/page/login/login.html'
             }else{
               this.imageUrl = `/common/download?name=${response.data}`
               this.ruleForm.image = response.data
-            }
+            }//未登录
           },
 
           onChange (file) {
@@ -520,12 +520,12 @@
               const suffix = file.name.split('.')[1]
               const size = file.size / 1024 / 1024 < 2
               if(['png','jpeg','jpg'].indexOf(suffix) < 0){
-                this.$message.error('上传图片只支持 png、jpeg、jpg 格式！')
+                this.$message.error('Image upload supports only PNG, JPEG, and JPG formats！')//上传图片只支持 png、jpeg、jpg 格式
                 this.$refs.upload.clearFiles()
                 return false
               }
               if(!size){
-                this.$message.error('上传文件大小不能超过 2MB!')
+                this.$message.error('File size should not exceed 2MB for upload!')//上传文件大小不能超过 2MB
                 return false
               }
               return file
@@ -536,7 +536,7 @@
             window.parent.menuHandle({
               id: '4',
               url: '/backend/page/food/list.html',
-              name: '菜品管理'
+              name: 'Equipment Management'
             },false)
           }
         }

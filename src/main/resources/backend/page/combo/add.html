@@ -174,47 +174,47 @@
           class="demo-ruleForm"
         >
           <div>
-            <el-form-item label="套餐名称:" prop="name" >
-              <el-input v-model="ruleForm.name" placeholder="请填写套餐名称" maxlength="20"/>
+            <el-form-item label="Package Name" prop="name" ><!--套餐名称: 请填写套餐名称-->
+              <el-input v-model="ruleForm.name" placeholder="Please enter package name" maxlength="20"/>
             </el-form-item>
-            <el-form-item label="套餐分类:" prop="idType">
-              <el-select v-model="ruleForm.idType" placeholder="请选择套餐分类" @change="$forceUpdate()">
+            <el-form-item label="Package Category" prop="idType"><!--套餐分类:-->
+              <el-select v-model="ruleForm.idType" placeholder="Please Choose Package Category" @change="$forceUpdate()"><!--请选择套餐分类-->
                 <el-option v-for="(item, index) in setMealList" :key="index" :label="item.name" :value="item.id" />
               </el-select>
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="套餐价格:" prop="price">
-              <el-input v-model="ruleForm.price" placeholder="请设置套餐价格" />
+            <el-form-item label="Package Price" prop="price"><!--套餐价格:  请设置套餐价格-->
+              <el-input v-model="ruleForm.price" placeholder="Please set package price" />
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="套餐菜品:" class="setmealFood">
+            <el-form-item label="Package Equipments" class="setmealFood"><!--套餐菜品:-->
               <el-form-item>
                 <div class="addDish">
-                  <span v-if="dishTable.length == 0" class="addBut" @click="openAddDish"> + 添加菜品</span>
+                  <span v-if="dishTable.length == 0" class="addBut" @click="openAddDish"> + Add Equipments</span><!--添加蔡品:-->
                   <div v-if="dishTable.length != 0" class="content">
-                    <div class="addBut" style="margin-bottom: 20px" @click="openAddDish">+ 添加菜品</div>
+                    <div class="addBut" style="margin-bottom: 20px" @click="openAddDish">+ Add Equipments</div><!--添加蔡品:-->
                     <div class="table">
                       <el-table :data="dishTable" style="width: 100%">
-                        <el-table-column prop="name" label="名称" width="180" align="center"></el-table-column>
-                        <el-table-column prop="price" label="原价" width="180">
+                        <el-table-column prop="name" label="Name" width="180" align="center"></el-table-column><!--名称-->
+                        <el-table-column prop="price" label="Price" width="180"><!--原价-->
                           <template slot-scope="scope"> {{ Number(scope.row.price) / 100 }} </template>
                         </el-table-column>
-                        <el-table-column prop="address" label="份数" align="center">
+                        <el-table-column prop="address" label="Amount" align="center"><!--份数-->
                           <template slot-scope="scope">
                             <el-input-number
                               v-model="scope.row.copies"
                               size="small"
                               :min="1"
                               :max="99"
-                              label="描述文字"
-                            ></el-input-number>
+                              label="Description"
+                            ></el-input-number><!--描述文字-->
                           </template>
                         </el-table-column>
-                        <el-table-column prop="address" label="操作" width="180px;" align="center">
+                        <el-table-column prop="address" label="Operation" width="180px;" align="center"><!--操作-->
                           <template slot-scope="scope">
-                            <el-button type="text" size="small" @click="delDishHandle(scope.$index)"> 删除 </el-button>
+                            <el-button type="text" size="small" @click="delDishHandle(scope.$index)"> Delete </el-button><!--删除-->
                           </template>
                         </el-table-column>
                       </el-table>
@@ -225,7 +225,7 @@
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="套餐图片:" class="uploadImg">
+            <el-form-item label="Package Image" class="uploadImg"><!--套餐图片:-->
               <el-upload
                 class="avatar-uploader"
                 action="/common/upload"
@@ -240,41 +240,41 @@
             </el-form-item>
           </div>
           <div class="address">
-            <el-form-item label="套餐描述:">
-              <el-input v-model="ruleForm.description" type="textarea" :rows="3" placeholder="套餐描述，最长200字" maxlength="200"/>
+            <el-form-item label="Package Description"><!--套餐描述-->
+              <el-input v-model="ruleForm.description" type="textarea" :rows="3" placeholder="Package description, maximum 200 words" maxlength="200"/><!--套餐描述，最长200字-->
             </el-form-item>
           </div>
           <div class="subBox address">
             <el-form-item>
-              <el-button @click="goBack()"> 取消 </el-button>
-              <el-button type="primary" @click="submitForm('ruleForm', false)"> 保存 </el-button>
+              <el-button @click="goBack()"> Cancel </el-button><!--取消-->
+              <el-button type="primary" @click="submitForm('ruleForm', false)"> Save </el-button><!--保存-->
               <el-button
                 v-if="actionType == 'add'"
                 type="primary"
                 class="continue"
                 @click="submitForm('ruleForm', true)"
               >
-                保存并继续添加套餐
-              </el-button>
+                Save and Continue Adding
+              </el-button><!--保存并继续添加套餐-->
             </el-form-item>
           </div>
         </el-form>
       </div>
       <el-dialog
-        title="添加菜品"
+        title="Add Equipment"
         class="addDishList"
         :visible.sync="dialogVisible"
         width="60%"
         :before-close="handleClose"
-      >
+      ><!--添加菜品-->
         <el-input
           v-model="value"
           class="seachDish"
-          placeholder="请输入菜品名称进行搜索"
+          placeholder="Please enter equipment name to search"
           style="width: 250px"
           size="small"
           clearable
-        >
+        ><!--请输入菜品名称进行搜索-->
           <i slot="prefix" class="el-input__icon el-icon-search" style="cursor: pointer" @click="seachHandle"></i>
         </el-input>
         <!-- <AddDish ref="adddish" :check-list="checkList" :seach-key="seachKey" @checkList="getCheckList" /> -->
@@ -295,8 +295,8 @@
             <div class="tabList">
               <div class="table">
                 <div v-if="dishAddList.length == 0" style="padding-left:10px">
-                  暂无菜品!
-                </div>
+                  No Equipments Available
+                </div><!--暂无菜品!-->
                 <el-checkbox-group
                   v-if="dishAddList.length > 0"
                   v-model="checkedList"
@@ -313,7 +313,7 @@
                     >
                       <div class="item">
                         <span style="flex: 3;text-align: left">{{ item.dishName }}</span>
-                        <span>{{ item.status == 0 ? '停售' : '在售' }}</span>
+                        <span>{{ item.status == 0 ? 'Out of Stock' : 'In stock' }}</span><!--'停售' : '在售'-->
                         <span>{{ Number(item.price)/100 }}</span>
                       </div>
                     </el-checkbox>
@@ -324,8 +324,8 @@
           </div>
           <div class="ritCont">
             <div class="tit">
-              已选菜品({{ checkedList.length }})
-            </div>
+              Selected Equipments({{ checkedList.length }})
+            </div><!--已选菜品-->
             <div class="items">
               <div
                 v-for="(item, ind) in checkedList"
@@ -349,8 +349,8 @@
         </div>
         
         <span slot="footer" class="dialog-footer">
-          <el-button @click="handleClose">取 消</el-button>
-          <el-button type="primary" @click="addTableList">确 定</el-button>
+          <el-button @click="handleClose">CANCEL</el-button><!--取消-->
+          <el-button type="primary" @click="addTableList">CONFIRM</el-button><!--确定-->
         </span>
       </el-dialog>
     </div>
@@ -405,31 +405,31 @@
             return {
               name: {
                 required: true,
-                message: '请输入套餐名称',
+                message: 'Please Enter Package Name',
                 trigger: 'blur',
-              },
+              },<!--请输入套餐名称-->
               idType: {
                 required: true,
-                message: '请选择套餐分类',
+                message: 'Please Select Package Category',
                 trigger: 'change',
-              },
+              },<!--请选择套餐分类-->
               price: {
                 required: true,
                 // 'message': '请输入套餐价格',
                 validator: (rules, value, callback) => {
                     if (!value) {
-                      callback(new Error('请填写菜品价格'))
+                      callback(new Error('Please Enter Package Price'))
                     } else {
                       const reg = /^\d+(\.\d{0,2})?$/
                       if (reg.test(value)) {
                         if(value < 10000){
                           callback()
                         }else{
-                          callback(new Error('菜品价格小于10000'))
+                          callback(new Error('Package price should be less than 10000'))
                         }
                       } else {
-                        callback(new Error('菜品价格格式只能为数字,且最多保留两位小数'))
-                      }
+                        callback(new Error('Package price in numeric format with a maximum of two decimal places.'))
+                      }<!--请填写菜品价格  菜品价格小于10000  菜品价格格式只能为数字,且最多保留两位小数-->
                     }
                   },
                 trigger: 'blur',
@@ -470,8 +470,8 @@
                 this.ruleForm.idType = res.data.categoryId
                 // this.ruleForm.password = ''
               } else {
-                this.$message.error(res.msg || '操作失败')
-              }
+                this.$message.error(res.msg || 'Operation Failed')
+              }<!--操作失败-->
             })
           },
           seachHandle() {
@@ -483,8 +483,8 @@
               if (res.code === 1) {
                 this.setMealList = res.data.map((obj) => ({ ...obj, idType: obj.id }))
               } else {
-                this.$message.error(res.msg || '操作失败')
-              }
+                this.$message.error(res.msg || 'Operation Failed')
+              }<!--操作失败-->
             })
           },
           // 删除套餐菜品
@@ -539,20 +539,21 @@
                 prams.status = this.ruleForm ? 1 : 0
                 prams.categoryId = this.ruleForm.idType
                 if(prams.setmealDishes.length < 1){
-                  this.$message.error('请选择菜品！')
+                  this.$message.error('Please Select Equipment')
                   return 
-                }
+                }<!--请选择菜品-->
                 if(!this.imageUrl){
-                  this.$message.error('请上传套餐图片')
+                  this.$message.error('Please Upload Package Image')
                   return 
-                }
+                }<!--请上传套餐图片-->
                 // delete prams.dishList
+                <!--套餐添加成功！-->
                 if (this.actionType == 'add') {
                   delete prams.id
                   addSetmeal(prams)
                     .then((res) => {
                       if (res.code === 1) {
-                        this.$message.success('套餐添加成功！')
+                        this.$message.success('Package Added Successfully')
                         if (!st) {
                           this.goBack()
                         } else {
@@ -574,25 +575,25 @@
                           this.imageUrl = ''
                         }
                       } else {
-                        this.$message.error(res.msg || '操作失败')
-                      }
+                        this.$message.error(res.msg || 'Operation Failed')
+                      }<!--操作失败-->
                     })
                     .catch((err) => {
-                      this.$message.error('请求出错了：' + err)
+                      this.$message.error('Request Error：' + err)
                     })
                 } else {
                   delete prams.updateTime
                   editSetmeal(prams)
                     .then((res) => {
                       if (res.code === 1) {
-                        this.$message.success('套餐修改成功！')
+                        this.$message.success('Package Edited Successfully！')
                         this.goBack()
                       } else {
-                        this.$message.error(res.msg || '操作失败')
-                      }
+                        this.$message.error(res.msg || 'Operation Failed')
+                      }<!--操作失败-->
                     })
                     .catch((err) => {
-                      this.$message.error('请求出错了：' + err)
+                      this.$message.error('Request Error：' + err)
                     })
                 }
               } else {
@@ -602,7 +603,7 @@
           },
           handleAvatarSuccess (response, file, fileList) {
             // this.imageUrl = response.data
-            if(response.code === 0 && response.msg === '未登录'){
+            if(response.code === 0 && response.msg === 'Not logged in'){
               window.top.location.href = '/backend/page/login/login.html'
             }else{
               this.imageUrl = `/common/download?name=${response.data}`
@@ -615,12 +616,12 @@
               const suffix = file.name.split('.')[1]
               const size = file.size / 1024 / 1024 < 2
               if(['png','jpeg','jpg'].indexOf(suffix) < 0){
-                this.$message.error('上传图片只支持 png、jpeg、jpg 格式！')
+                this.$message.error('Image upload supports only PNG, JPEG, and JPG formats！')//上传图片只支持 png、jpeg、jpg 格式.
                 this.$refs.upload.clearFiles()
                 return false
               }
               if(!size){
-                this.$message.error('上传文件大小不能超过 2MB!')
+                this.$message.error('File size should not exceed 2MB for upload!')//上传文件大小不能超过 2MB
                 return false
               }
               return file
@@ -631,8 +632,8 @@
               {
                 id: '5',
                 url: '/backend/page/combo/list.html',
-                name: '套餐管理',
-              },
+                name: 'Package Management',
+              },<!--套餐管理-->
               false
             )
           },
