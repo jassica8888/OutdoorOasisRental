@@ -36,7 +36,10 @@ public class LoginCheckFilter implements Filter{
                 "/employee/logout",
                 "/backend/**",
                 "/front/**",
-                "/common/**"
+                "/common/**",
+                "/user/sendMsg",//移动端发送请求
+                "/user/login"//移动端登录
+
         };
         //2.判断本次请求是否需要过滤（某些请求及路径可以直接放行）
         boolean check = check(urls,requestURI);
@@ -48,12 +51,26 @@ public class LoginCheckFilter implements Filter{
             return;
         }
 
-        //4.判断登录状态，如果已经登录，直接放行（不能直接放行的请求，检查是否已登录）
+        //4-1.判断登录状态，如果已经登录，直接放行（不能直接放行的请求，检查是否已登录）
         if(request.getSession().getAttribute("employee")!=null){
             log.info("User logged in, user ID is:{}",request.getSession().getAttribute("employee"));
 
             Long empId = (long)request.getSession().getAttribute("employee");
             BaseContext.setCurrentId(empId);
+
+            //long id = Thread.currentThread().getId();
+            //log.info("Thread Id is:{}",id);
+
+            filterChain.doFilter(request,response);//直接放行
+            return;
+        }
+
+        //4-2.判断用户登录状态，如果已经登录，直接放行（不能直接放行的请求，检查是否已登录）
+        if(request.getSession().getAttribute("user")!=null){
+            log.info("User logged in, user ID is:{}",request.getSession().getAttribute("user"));
+
+            Long userId = (long)request.getSession().getAttribute("user");
+            BaseContext.setCurrentId(userId);
 
             //long id = Thread.currentThread().getId();
             //log.info("Thread Id is:{}",id);
