@@ -26,11 +26,8 @@ public class SMSUtils {
 	 */
 	public static void sendMessage(String signName, String templateCode,String phoneNumbers,String param){
 		//String signName, String templateCode,String phoneNumbers,
-<<<<<<< HEAD
+
 		DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "***", "***");
-=======
-		DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI5tPGa8EswCdP5ayVfq84", "m0F4IahxSpPCY53u37SjCDoacTLk4K");
->>>>>>> origin/master
 		HttpClientConfig clientConfig = HttpClientConfig.getDefault();
 		clientConfig.setHttpProxy("http://127.0.0.1:10809");
 		clientConfig.setHttpsProxy("http://127.0.0.1:10809");
