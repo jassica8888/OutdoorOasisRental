@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -90,6 +91,17 @@ public class UserController {
             }
 
             return R.error("Login failed");
+    }
+
+    /**
+     * 移动端登出
+     * @param request
+     * @return
+     */
+    @PostMapping("/loginout")
+    public R<String> logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("user");
+        return R.success("Log out successfully");
     }
 
 }

@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhangdi.reggie.common.R;
+import com.zhangdi.reggie.dto.DishDto;
 import com.zhangdi.reggie.dto.SetmealDto;
 import com.zhangdi.reggie.entity.Category;
+import com.zhangdi.reggie.entity.Dish;
 import com.zhangdi.reggie.entity.Setmeal;
 import com.zhangdi.reggie.entity.SetmealDish;
 import com.zhangdi.reggie.service.CategoryService;
+import com.zhangdi.reggie.service.DishService;
 import com.zhangdi.reggie.service.SetmealDishService;
 import com.zhangdi.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +37,8 @@ public class SetmealController {
     private CategoryService categoryService;
     @Autowired
     private SetmealDishService setmealDishService;
+    @Autowired
+    private DishService dishService;
 
     /**
      * 新增套餐
@@ -201,4 +206,26 @@ public class SetmealController {
 //        return R.success(list);
 //    }
 
+    @GetMapping("/dish/{id}")
+    public R<List<DishDto>> showSetmealDish(@PathVariable Long id) {
+        //条件构造器
+        LambdaQueryWrapper<SetmealDish> dishLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        //手里的数据只有setmealId
+        dishLambdaQueryWrapper.eq(SetmealDish::getSetmealId, id);
+        //查询数据
+        List<SetmealDish> records = setmealDishService.list(dishLambdaQueryWrapper);
+        List<DishDto> dtoList = records.stream().map((item) -> {
+            DishDto dishDto = new DishDto();
+            //copy数据
+            BeanUtils.copyProperties(item,dishDto);
+            //查询对应菜品id
+            Long dishId = item.getDishId();
+            //根据菜品id获取具体菜品数据，这里要自动装配 dishService
+            Dish dish = dishService.getById(dishId);
+            //其实主要数据是要那个图片，不过我们这里多copy一点也没事
+            BeanUtils.copyProperties(dish,dishDto);
+            return dishDto;
+        }).collect(Collectors.toList());
+        return R.success(dtoList);
+    }
 }
