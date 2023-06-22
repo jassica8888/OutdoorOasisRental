@@ -51,7 +51,7 @@
         width: 777px;
       }
       .addDish .addBut {
-        background: #ffc200;
+        background: mediumseagreen;
         display: inline-block;
         padding: 0px 20px;
         border-radius: 3px;
@@ -189,12 +189,12 @@
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="Package Equipments" class="setmealFood"><!--套餐菜品:-->
+            <el-form-item label="Package Equipment" class="setmealFood"><!--套餐菜品:-->
               <el-form-item>
                 <div class="addDish">
-                  <span v-if="dishTable.length == 0" class="addBut" @click="openAddDish"> + Add Equipments</span><!--添加蔡品:-->
+                  <span v-if="dishTable.length == 0" class="addBut" @click="openAddDish"> + Add Equipment</span><!--添加蔡品:-->
                   <div v-if="dishTable.length != 0" class="content">
-                    <div class="addBut" style="margin-bottom: 20px" @click="openAddDish">+ Add Equipments</div><!--添加蔡品:-->
+                    <div class="addBut" style="margin-bottom: 20px" @click="openAddDish">+ Add Equipment</div><!--添加蔡品:-->
                     <div class="table">
                       <el-table :data="dishTable" style="width: 100%">
                         <el-table-column prop="name" label="Name" width="180" align="center"></el-table-column><!--名称-->
@@ -295,7 +295,7 @@
             <div class="tabList">
               <div class="table">
                 <div v-if="dishAddList.length == 0" style="padding-left:10px">
-                  No Equipments Available
+                  No Equipment Available
                 </div><!--暂无菜品!-->
                 <el-checkbox-group
                   v-if="dishAddList.length > 0"

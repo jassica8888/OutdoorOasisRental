@@ -105,7 +105,7 @@
                 class="flavor"
               >
                 <div class="title">
-                  <span>Specification Name</span><span>Flavor tags (enter tags and press Enter to add)</span><!-- 口味名（3个字内）口味标签（输入标签回车添加） -->
+                  <span>Specification Name(Enter tags and press Enter to add)</span><!-- 口味名（3个字内）口味标签（输入标签回车添加） -->
                 </div>
                 <div class="cont">
                   <div
@@ -208,7 +208,7 @@
         </div>
         <div class="address">
           <el-form-item
-            label="Package Description"
+            label="Equipment Description"
             prop="region"
           ><!-- 菜品描述: -->
             <el-input
@@ -402,10 +402,9 @@
           getFlavorListHand () {
             // flavor flavorData
             this.dishFlavorsData = [
-              {'name':'甜味','value':['无糖','少糖','半糖','多糖','全糖']},
-              {'name':'温度','value':['热饮','常温','去冰','少冰','多冰']},
-              {'name':'忌口','value':['不要葱','不要蒜','不要香菜','不要辣']},
-              {'name':'辣度','value':['不辣','微辣','中辣','重辣']}
+              {'name':'Occupancy','value':['1','2','3','4','5 and more']},
+              {'name':'Age Range','value':['Adult','Kid','All Ages']},
+              {'name':'Seasons','value':['Spring&Autumn','Summer','Winter','All seasons']},
             ]
           },
 

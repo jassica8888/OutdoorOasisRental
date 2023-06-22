@@ -204,7 +204,7 @@
                 return this.$message.error('Please select object to delete')
               }//批量 请选择删除对象
             }
-            this.$confirm('Confirm deleting this package, do you want to proceed?', 'Confirm Delete', {
+            this.$confirm('Confirm deleting this equipment, do you want to proceed?', 'Confirm Delete', {
               'confirmButtonText': 'Confirm',//确定删除该套餐, 是否继续? 确定删除
               'cancelButtonText': 'Cancel',
             }).then(() => {
@@ -226,7 +226,7 @@
             let params = {}
             if (typeof row === 'string' ) {
               if (this.checkList.length === 0) {
-                this.$message.error('Batch operation, please select packages to operate on first!')//批量操作，请先勾选操作菜品！
+                this.$message.error('Batch operation, please select equipment to operate on first!')//批量操作，请先勾选操作菜品！
                 return false
               }
               params.id = this.checkList.join(',')
@@ -236,7 +236,7 @@
               params.status = row.status ? '0' : '1'
             }
             this.dishState = params
-            this.$confirm('Confirm changing status of this package?', 'Prompt', {
+            this.$confirm('Confirm changing status of this equipment?', 'Prompt', {
               'confirmButtonText': 'Confirm',//'确认更改该套餐状态?', '提示','确定','取消'
               'cancelButtonText': 'Cancel',
               'type': 'warning'

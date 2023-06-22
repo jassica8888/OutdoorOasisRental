@@ -107,6 +107,8 @@
   color: #333333;
 }
 
+
+
 #address_edit .divContent .divItem .spanActiveCompany {
   background: #e1f1fe;
 }
@@ -130,7 +132,7 @@
 #address_edit .divContent .divSave {
   height: 36rem;
   opacity: 1;
-  background: #ffc200;
+  background: mediumseagreen;
   border-radius: 18rem;
   font-size: 15rem;
   font-family: PingFangSC, PingFangSC-Regular;

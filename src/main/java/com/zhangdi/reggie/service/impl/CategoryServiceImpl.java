@@ -32,7 +32,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         //查询当前分类是否关联菜品，如果已经关联，抛出一个业务异常
         if(count1>0){
             //已经关联菜品，抛出一个业务异常
-            throw new CustomException("Equipments are associated with this category, deletion is not allowed.");
+            throw new CustomException("Equipment are associated with this category, deletion is not allowed.");
 
         }
         //查询当前分类是否关联套餐，如果已经关联，抛出一个业务异常

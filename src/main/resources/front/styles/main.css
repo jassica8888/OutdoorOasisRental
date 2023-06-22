@@ -246,7 +246,7 @@
   width: 64rem;
   height: 24rem;
   opacity: 1;
-  background: #ffc200;
+  background: mediumseagreen;
   border-radius: 12rem;
   font-size: 12rem;
   font-family: PingFangSC, PingFangSC-Regular;
@@ -278,11 +278,11 @@
 }
 
 #main .divCart .imgCartActive {
-  background-image: url("./../images/cart_active.png");
+  background-image: url("./../images/delivery 3-active.png");
 }
 
 #main .divCart .imgCart {
-  background-image: url("./../images/cart.png");
+  background-image: url("./../images/delivery 3-grey.png");
 }
 
 #main .divCart > div:first-child {
@@ -331,7 +331,7 @@
 }
 #main .divCart .btnSubmitActive {
   color: #333333;
-  background: #ffc200;
+  background: mediumseagreen;
 }
 
 #main .divCart .divGoodsNum {
@@ -421,7 +421,7 @@
   height: 30rem;
   opacity: 1;
   background: #ffffff;
-  border: 1rem solid #ffc200;
+  border: 1rem solid mediumseagreen;
   border-radius: 7rem;
   line-height: 30rem;
   padding-left: 13rem;
@@ -435,7 +435,7 @@
 }
 
 #main .dialogFlavor .divContent .spanActive {
-  background: #ffc200;
+  background: mediumseagreen;
   font-weight: 500;
 }
 
@@ -467,7 +467,7 @@
   width: 100rem;
   height: 30rem;
   opacity: 1;
-  background: #ffc200;
+  background: mediumseagreen;
   border-radius: 15rem;
   text-align: center;
   line-height: 30rem;
@@ -703,7 +703,7 @@
   width: 64rem;
   height: 24rem;
   opacity: 1;
-  background: #ffc200;
+  background: mediumseagreen;
   border-radius: 12rem;
   font-size: 12rem;
   font-family: PingFangSC, PingFangSC-Regular;
@@ -863,7 +863,7 @@
   width: 64rem;
   height: 24rem;
   opacity: 1;
-  background: #ffc200;
+  background: mediumseagreen;
   border-radius: 12rem;
   font-size: 12rem;
   font-family: PingFangSC, PingFangSC-Regular;
@@ -888,7 +888,7 @@
   width: 100rem;
   height: 30rem;
   opacity: 1;
-  background: #ffc200;
+  background: mediumseagreen;
   border-radius: 15rem;
   font-size: 14rem;
   font-family: PingFangSC, PingFangSC-Regular;

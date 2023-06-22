@@ -252,11 +252,11 @@
 }
 
 #add_order .divCart .imgCartActive {
-  background-image: url("./../images/cart_active.png");
+  background-image: url("./../images/delivery 3-active.png");
 }
 
 #add_order .divCart .imgCart {
-  background-image: url("./../images/cart.png");
+  background-image: url("./../images/delivery 3-grey.png");
 }
 
 #add_order .divCart > div:first-child {
@@ -305,7 +305,7 @@
 }
 #add_order .divCart .btnSubmitActive {
   color: #333333;
-  background: #ffc200;
+  background: mediumseagreen;
 }
 
 #add_order .divCart .divGoodsNum {
