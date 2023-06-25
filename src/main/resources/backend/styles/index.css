@@ -234,7 +234,7 @@
   line-height: 42px;
 }
 .el-menu .el-menu-item {
-  padding: 0 0 0 32px !important;
+  padding: 0 0 0 10px !important;
   margin: 0 34px 20px 0;
   border-radius: 0 21px 21px 0 !important;
 }

@@ -1,138 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
-        <title>Outdoor Oasis Rental</title>
-        <link rel="icon" href="./../images/favico.ico">
-        <!--不同屏幕尺寸根字体设置-->
-        <script src="./../js/base.js"></script>
-        <!--element-ui的样式-->
-        <link rel="stylesheet" href="../../backend/plugins/element-ui/index.css" />
-        <!--引入vant样式-->
-        <link rel="stylesheet" href="../styles/vant.min.css"/>
-        <!-- 引入样式  -->
-        <link rel="stylesheet" href="../styles/index.css" />
-        <!--本页面内容的样式-->
-        <link rel="stylesheet" href="./../styles/address-edit.css" />
-    </head>
-    <body>
-        <div id="address_edit" class="app">
-            <div class="divHead">
-                <div class="divTitle">
-                    <i class="el-icon-arrow-left" @click="goBack"></i>{{title}}
-                </div>
-            </div>
-            <div class="divContent">
-                <div class="divItem">
-                   <span>Consignee：</span>
-                   <el-input placeholder=" Please fill in consignee's name" v-model="form.consignee"  maxlength='10' class="inputUser"/></el-input>
-                   <span class="spanChecked" @click="form.sex = '1'">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no,minimal-ui">
+    <title>Outdoor Oasis Rental</title>
+    <link rel="icon" href="./../images/favico.ico">
+    <!--不同屏幕尺寸根字体设置-->
+    <script src="./../js/base.js"></script>
+    <!--element-ui的样式-->
+    <link rel="stylesheet" href="../../backend/plugins/element-ui/index.css" />
+    <!--引入vant样式-->
+    <link rel="stylesheet" href="../styles/vant.min.css"/>
+    <!-- 引入样式  -->
+    <link rel="stylesheet" href="../styles/index.css" />
+    <!--本页面内容的样式-->
+    <link rel="stylesheet" href="./../styles/address-edit.css" />
+
+
+    <style type="text/css">
+        body, html{width: 100%;height: 100%;margin:0;font-size:14px;}
+        #l-map{height:300px;width:100%;}
+        #r-result{width:100%;}
+    </style>
+
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=ZlutxPpXWHclXp92kh1OgqEu4BLDI94F"></script>
+
+
+
+
+</head>
+<body>
+
+
+<div id="l-map"></div>
+<div id="address_edit" class="app">
+<!--    <div class="divHead">-->
+<!--        <div class="divTitle">-->
+<!--            <i class="el-icon-arrow-left" @click="goBack"></i>{{title}}-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="divContent">
+        <div class="divItem">
+            <span>Consignee：</span>
+            <el-input placeholder=" Please fill in consignee's name" v-model="form.consignee"  maxlength='10' class="inputUser"/></el-input>
+            <span class="spanChecked" @click="form.sex = '1'">
                     <i :class="{iActive:form.sex === '1'}"></i>
                     Mr.
                    </span>
-                   <span class="spanChecked" @click="form.sex = '0'">
+            <span class="spanChecked" @click="form.sex = '0'">
                     <i :class="{iActive:form.sex === '0'}"></i>
                     Ms.
                 </span>
-                </div>
-                <div class="divItem">
-                    <span>Phone No：</span>
-                    <el-input placeholder=" Please fill in consignee's phone number" v-model="form.phone"  maxlength='20' style="width: calc(100% - 80rem);"/></el-input>
-                </div>
-                <div class="divItem">
-                    <span>Address：</span>
-                    <el-input placeholder=" please fill in consignee's delivery address" v-model="form.detail"  maxlength='140'/></el-input>
-                </div>
-                <div class="divItem ">
-                    <span>Label：</span>
-                    <span v-for="(item,index) in labelList" :key="index" @click="form.label = item;activeIndex = index" :class="{spanItem:true,spanActiveSchool:activeIndex === index}">{{item}}</span>
-                </div>
-                <div class="divSave" @click="saveAddress">Save Address</div>
-                <div class="divDelete" @click="deleteAddress" v-if="id">Delete Address</div>
-            </div>
         </div>
-        <!-- 开发环境版本,包含了有帮助的命令行警告 -->
-        <script src="../../backend/plugins/vue/vue.js"></script>
-        <!-- 引入组件库 -->
-        <script src="../../backend/plugins/element-ui/index.js"></script>
-        <!-- 引入vant样式 -->
-        <script src="./../js/vant.min.js"></script>       
-        <script src="./../js/common.js"></script>
-        <script src="./../api/address.js"></script>
-        <!-- 引入axios -->
-        <script src="../../backend/plugins/axios/axios.min.js"></script>
-        <script src="./../js/request.js"></script>
-        <script>
-            new Vue({
-                el:"#address_edit",
-                data(){
-                    return {
-                        title:'Add delivery address',
-                        form:{
-                            consignee:'',//联系人
-                            phone:undefined,//手机号
-                            sex:'1',//0表示女 1 表示男
-                            detail:'',//收货地址
-                            label:'Company',//标签
-                        },
-                        labelList:[
-                            'Null','Company','Home','School'
-                        ],
-                        id:undefined,
-                        activeIndex :0
+        <div class="divItem">
+            <span>Phone No：</span>
+            <el-input placeholder=" Please fill in consignee's phone number" v-model="form.phone"  maxlength='20' style="width: calc(100% - 80rem);"/></el-input>
+        </div>
+        <div class="divItem" id="r-result">
+            <span>Address：</span>
+            <input placeholder="Delivery address" v-model="form.detail"  maxlength='140' type="text" id="suggestId" size="20" value="百度" />
+        </div>
+
+        <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;">
+        </div>
+
+        <div class="divItem ">
+            <span>Label：</span>
+            <span v-for="(item,index) in labelList" :key="index" @click="form.label = item;activeIndex = index" :class="{spanItem:true,spanActiveSchool:activeIndex === index}">{{item}}</span>
+        </div>
+        <div class="divSave" @click="saveAddress">Save Address</div>
+        <div class="divDelete" @click="deleteAddress" v-if="id">Delete Address</div>
+    </div>
+</div>
+<!-- 开发环境版本,包含了有帮助的命令行警告 -->
+<script src="../../backend/plugins/vue/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="../../backend/plugins/element-ui/index.js"></script>
+<!-- 引入vant样式 -->
+<script src="./../js/vant.min.js"></script>
+<script src="./../js/common.js"></script>
+<script src="./../api/address.js"></script>
+<!-- 引入axios -->
+<script src="../../backend/plugins/axios/axios.min.js"></script>
+<script src="./../js/request.js"></script>
+
+<script type="text/javascript">
+    // 百度地图API功能
+    function G(id) {
+        return document.getElementById(id);
+    }
+
+    var map = new BMap.Map("l-map");
+    // map.centerAndZoom("北京",12);                   // 初始化地图,设置城市和地图级别。
+
+    var point = new BMap.Point(118.49559824074095, 37.46930617292247);
+    map.centerAndZoom(point, 12);
+    map.addControl(new BMap.NavigationControl());
+    map.addControl(new BMap.ScaleControl());
+    map.addControl(new BMap.OverviewMapControl());
+    map.addControl(new BMap.MapTypeControl());
+    map.setCurrentCity("东营");
+
+    var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+        {"input" : "suggestId"
+            ,"location" : map
+        });
+
+    ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+        var str = "";
+        var _value = e.fromitem.value;
+        var value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+        G("searchResultPanel").innerHTML = str;
+    });
+
+    var myValue;
+    ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+        var _value = e.item.value;
+        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+
+        setPlace();
+    });
+
+    function setPlace(){
+        map.clearOverlays();    //清除地图上所有覆盖物
+        function myFun(){
+            var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            map.centerAndZoom(pp, 18);
+            map.addOverlay(new BMap.Marker(pp));    //添加标注
+            var distanceFromAtoB = (map.getDistance(point,pp)).toFixed(2)*1.0;
+            alert("Distance："+(map.getDistance(point,pp)).toFixed(2)+"m"); //获取两点距离,保留小数点后两位。
+        }
+        var local = new BMap.LocalSearch(map, { //智能搜索
+            onSearchComplete: myFun
+        });
+        local.search(myValue);
+        return distanceFromAtoB;
+    }
+</script>
+
+<script>
+    new Vue({
+        el:"#address_edit",
+        data(){
+            return {
+                title:'Add delivery address',
+                form:{
+                    consignee:'',//联系人
+                    phone:undefined,//手机号
+                    sex:'1',//0表示女 1 表示男
+                    detail:'',//收货地址
+                    label:'Company',//标签
+                },
+                labelList:[
+                    'Null','Company','Home','School'
+                ],
+                id:undefined,
+                activeIndex :0
+            }
+        },
+        computed:{},
+        created(){
+            this.initData()
+        },
+        mounted(){
+        },
+        methods:{
+            goBack(){
+                history.go(-1)
+            },
+            async initData(){
+                const params = parseUrl(window.location.search)
+                this.id = params.id
+                if(params.id){
+                    this.title = 'Edit delivery address'
+                    const res = await addressFindOneApi(params.id)
+                    if(res.code === 1){
+                        this.form = res.data
+                    }else{
+                        this.$notify({ type:'warning', message:res.msg});
                     }
-                },
-                computed:{},
-                created(){
-                    this.initData()
-                },
-                mounted(){
-                },
-                methods:{
-                    goBack(){
-                        history.go(-1)
-                    },
-                    async initData(){
-                        const params = parseUrl(window.location.search)
-                        this.id = params.id
-                        if(params.id){
-                            this.title = 'Edit delivery address'
-                            const res = await addressFindOneApi(params.id)
-                            if(res.code === 1){
-                                this.form = res.data
-                            }else{
-                                this.$notify({ type:'warning', message:res.msg});
-                            }
-                        }
-                    },
-                    async saveAddress(){
-                        const form = this.form
-                        if(!form.consignee){
-                            this.$notify({ type:'warning', message:'Please fill in consignee name'});
-                            return
-                        }
-                        if(!form.phone){
-                            this.$notify({ type:'warning', message:'Please fill in phone number'});
-                            return 
-                        }
-                        if(!form.detail){
-                            this.$notify({ type:'warning', message:'Please fill in delivery address'});
-                            return 
-                        }
-                        const reg = /^1[3|4|5|7|8][0-9]{9}$/
-                        if(!reg.test(form.phone)){
-                            this.$notify({ type:'warning', message:'Invalid phone number'});
-                            return  
-                        }
-                        let res= {}
-                        if(this.id){
-                            res = await updateAddressApi(this.form)
-                        }else{
-                            res = await addAddressApi(this.form)
-                        }
-                        
+                }
+            },
+            async saveAddress(){
+                const form = this.form
+                if(!form.consignee){
+                    this.$notify({ type:'warning', message:'Please fill in consignee name'});
+                    return
+                }
+                if(!form.phone){
+                    this.$notify({ type:'warning', message:'Please fill in phone number'});
+                    return
+                }
+                if(!form.detail){
+                    this.$notify({ type:'warning', message:'Please fill in delivery address'});
+                    return
+                }
+                const reg = /^1[3|4|5|7|8][0-9]{9}$/
+                if(!reg.test(form.phone)){
+                    this.$notify({ type:'warning', message:'Invalid phone number'});
+                    return
+                }
+                let res= {}
+                if(this.id){
+                    res = await updateAddressApi(this.form)
+                }else{
+                    res = await addAddressApi(this.form)
+                }
+
+                if(res.code === 1){
+                    window.requestAnimationFrame(()=>{
+                        window.location.replace('/front/page/address.html')
+                    })
+                }else{
+                    this.$notify({ type:'warning', message:res.msg});
+                }
+            },
+            deleteAddress(){
+                this.$dialog.confirm({
+                    title: 'Confirm deletion',
+                    message: 'Are you sure to delete the current address?',
+                })
+                    .then( async () => {
+                        const res = await deleteAddressApi({ids:this.id })
                         if(res.code === 1){
                             window.requestAnimationFrame(()=>{
                                 window.location.replace('/front/page/address.html')
@@ -140,27 +243,12 @@
                         }else{
                             this.$notify({ type:'warning', message:res.msg});
                         }
-                    },
-                    deleteAddress(){
-                        this.$dialog.confirm({
-                            title: 'Confirm deletion',
-                            message: 'Are you sure to delete the current address?',
-                        })
-                        .then( async () => {
-                            const res = await deleteAddressApi({ids:this.id })
-                            if(res.code === 1){
-                                window.requestAnimationFrame(()=>{
-                                    window.location.replace('/front/page/address.html')
-                                })
-                            }else{
-                                this.$notify({ type:'warning', message:res.msg});
-                            }
-                        })
-                        .catch(() => {
-                        });
-                    },
-                }
-            })
-            </script>
-    </body>
+                    })
+                    .catch(() => {
+                    });
+            },
+        }
+    })
+</script>
+</body>
 </html>

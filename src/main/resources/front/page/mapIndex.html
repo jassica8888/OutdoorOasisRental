@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Geolocation</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=ZlutxPpXWHclXp92kh1OgqEu4BLDI94F"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        article {
+            height: 95%;
+            width: 60%;
+
+            color: rgb(85, 98, 110);
+            font-size: 3em;
+            box-shadow: 2px 2px 2px rgba(0,0,0,0.2),
+            -2px -2px 20px rgba(255, 255, 255, 1);
+            background-color: #efeeee;
+        }
+
+        body,
+        article {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .geoInfo{
+            width: 60%;
+            height: 60%;
+            border: 3px dashed  rgb(85, 98, 110) ;        }
+    </style>
+</head>
+
+<body>
+    <article>
+        <h1>BaiduMapAPI</h1>
+        <div class="geoInfo" id="geoInfo"></div>
+    </article>
+</body>
+<script>
+
+    let getInfo = document.getElementById("getInfo");
+    let map
+
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(myGPSFun)
+    }
+    else alert("Your browser does not support geolocation");
+
+
+    function myGPSFun(e){
+        let jd = e.coords.longitude; //经度
+        let wd = e.coords.latiude;   //纬度
+
+        map = new BMap.Map("geoInfo") ;  //创建地图实例
+
+        let point = new BMap.Point(118.488304,37.463678);   //存储经度和纬度
+
+        let convertor = new BMap.Convertor() ;   //坐标转换对象
+        let pointArr = []
+        pointArr.push(point)
+        convertor.translate(pointArr,1,5,translateCalback);
+        var myGeo = new BMap.Geocoder();
+        // 将地址解析结果显示在地图上，并调整地图视野
+        myGeo.getPoint("北京市海淀区上地10街10号", function(point){
+                if (point) {
+                    map.centerAndZoom(point, 16);
+                    map.addOverlay(new BMap.Marker(point));
+                }
+            },
+            "北京市");
+    }
+
+    function translateCalback(e){
+        if(e.status == 0){
+            let marker = new BMap.Marker(e.points[0]);
+            map.centerAndZoom(e.points[0],20) ;  //初始化地图，设置中心坐标和地图级别
+            map.addOverlay(marker);
+            map.enablesScrollWheelZoom(true);   //开启鼠标滑轮缩放功能
+            map.addControl(new BMap.NavigationControl());
+
+        }
+    }
+
+</script>
+</html>

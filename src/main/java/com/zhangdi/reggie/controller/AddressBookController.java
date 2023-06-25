@@ -52,6 +52,7 @@ public class AddressBookController {
         addressBook.setIsDefault(1);
         //SQL:update address_book set is_default = 1 where id = ?
         addressBookService.updateById(addressBook);
+
         return R.success(addressBook);
     }
 

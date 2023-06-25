@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="../styles/index.css" />
         <!--本页面内容的样式-->
         <link rel="stylesheet" href="./../styles/address.css" />
+        <script src="../../../../../../../阿里云下载/网页扫码支付案例/assets/js/jquery.qrcode.min.js"></script>
     </head>
     <body>
         <div id="address" class="app">
@@ -31,8 +32,8 @@
                         {{item.detail}}
                     </div>
                     <div class="divUserPhone">
-                        <span>{{item.consignee}}</span>
                         <span>{{item.sex === '0' ? 'Ms.' : 'Mr'}}</span>
+                        <span>{{item.consignee}}</span>
                         <span>{{item.phone}}</span>
                     </div>
                     <img src="./../images/edit.png" @click.stop.prevent="toAddressEditPage(item)"/>

@@ -195,6 +195,7 @@
                         if(res.code === 1){
                             window.requestAnimationFrame(()=>{
                                 window.location.replace('/front/page/pay-success.html')
+                                //window.location.replace('/front/page/wxpay.html')
                             })
                         }else{
                             this.$notify({ type:'warning', message:res.msg});
